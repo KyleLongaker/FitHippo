@@ -12,28 +12,37 @@ class User: ObservableObject {
     @Published var age = 0
     @Published var weight = 0.0
     @Published var height = 0.0
-    @Published var sex = 0 // Where female is 0 and male is 1 
+    @Published var sex = 0 // Where female is 0 and male is 1
 }
 
 
 struct SettingsView: View{
     @EnvironmentObject var user: User
-    @state BMI = 0
 
     var body: some View {
         VStack{
             Text("Settings")
+                .font(.headline)
+                .padding(.top, 100)
+            
+            // Input for calorie goal
+            Text("Enter your calorie goal:")
+            
+            // Text field for calorie goal
+            TextField("Calorie Goal", text: .constant(""))
+                .padding(.top, 100)
+
+        
             Text("Name: \(user.name)")
             Text("Age: \(user.age)")
             Text("Weight: \(user.weight)")
             Text("Height: \(user.height)")
             Text("Sex: \(user.sex)")
             Text("BMI: \(user.weight / (user.height * user.height))")
-            Text("BMR: \(user.weight * 10)")
-            Text("TDEE: \(user.weight * 10)")
             Text("Calories: \(user.weight * 10)")
-            Text()
         }
+        .environmentObject(user)
+}
 }
     
 
@@ -55,21 +64,10 @@ struct ContentView: View {
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .padding(.top, 100)
-
-                // Input for calorie goal
-                Text("Enter your calorie goal:")
-                    .font(.headline)
-                    .padding(.top, 100)
-                // Text field for calorie goal
-                TextField("Calorie Goal", text: .constant(""))
+            
                     .padding(.top, 100)
 
-                    // Display total calories burned
-                Text("Total Calories Burned:")
-                    .font(.headline)
-                    .padding(.top, 100)
-
-                WeightView(weight: $weight)
+                WeightView()
                     .padding(.top, 100)
 
 
@@ -79,19 +77,19 @@ struct ContentView: View {
                 // 3. Biking Page
                 // 4. Swimming Page
 
-                NavigationLink(destination: SettingsView(weight: self.weight)){
+                NavigationLink(destination: SettingsView()){
                     Text("Settings")
                 }
                 .padding(.top, 100)
-                NavigationLink(destination: RunningView(weight: self.weight)){
+                NavigationLink(destination: WalkingView()){
                     Text("Walking")
                 }
                 .padding(.top, 100)
-                NavigationLink(destination: BikingView(weight: self.weight)){
+                NavigationLink(destination: RunningView()){
                     Text("Running")
                 }
                 .padding(.top, 100)
-                NavigationLink(destination: SwimmingView(weight: self.weight)){
+                NavigationLink(destination: CyclingView()){
                     Text("Cycling")
                 }
                 .padding(.top, 100)
@@ -135,7 +133,57 @@ struct AboutView: View{
             }
         }
     }
-   
+}
+
+struct WalkingView: View{
+
+    var body: some View {
+        NavigationView{
+            VStack {
+                Text("Settings")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 100)
+
+                    TextField("Weight", text: .constant(""))
+
+            }
+        }
+    }
+}
+
+struct RunningView: View{
+
+    var body: some View {
+        NavigationView{
+            VStack {
+                Text("Settings")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 100)
+
+                    TextField("Weight", text: .constant(""))
+
+            }
+        }
+    }
+}
+
+struct CyclingView: View{
+
+    var body: some View {
+        NavigationView{
+            VStack {
+                Text("Settings")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top, 100)
+
+                    TextField("Weight", text: .constant(""))
+
+            }
+        }
+    }
 }
 
 
