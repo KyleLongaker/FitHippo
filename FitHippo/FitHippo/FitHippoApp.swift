@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct FitHippoApp: App {
+    @StateObject var user = User()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(user)
         }
     }
 }
